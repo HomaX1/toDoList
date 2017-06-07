@@ -2,10 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="node_modules/normalize.css/normalize.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
     <title>To Do List</title>
 </head>
 <body>
+
+<div class="wrap">
+
+<header class="header">
+    <h1 class="header__title">To-Do List</h1>
+    <form class="search">
+        <input class="search__input" type="text" placeholder="search">
+        <button class="search__icon">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+    </form>
+    <div class="clear"></div>
+</header>
+
+<div class="adding">
+    <form class="adding-form adding-form_left">
+        <input class="adding-form__input" type="text" placeholder="Enter category title">
+        <button class="adding-form__button">Add</button>
+    </form>
+    <form class="adding-form adding-form_right">
+        <input class="adding-form__input adding-form__input_width" type="text" placeholder="Enter title task">
+        <button class="adding-form__button">Add</button>
+    </form>
+    <div class="clear"></div>
+</div>
+
+    <div class="lists">
+        <ul class="category">
+        </ul>
+
+        <ul class="tasks">
+        </ul>
+        <div class="clear"></div>
+    </div>
+
+</div>
+
+
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/js/ajax.js"></script>
 
 </body>
 </html>

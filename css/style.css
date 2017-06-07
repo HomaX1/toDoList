@@ -1,0 +1,94 @@
+.wrap {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.header {
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+.clear {
+    clear: both;
+}
+
+.header__title {
+    float: left;
+    margin: 0;
+    font: 40px cursive;
+}
+
+.search {
+    float: right;
+    margin-top: 15px;
+}
+
+.search__input {
+    width: 200px;
+    height: 30px;
+    border: 2px solid grey;
+    border-radius: 5px;
+    padding-left: 10px;
+    font-family: cursive;
+}
+
+.search__input:active, .search__input:focus {
+    outline: 0;
+}
+
+.search__icon {
+    width: 30px;
+    height: 25px;
+    border: 1px solid grey;
+    background-color: darkgrey;
+    position: relative;
+    right: 40px;
+    bottom: 1px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.adding {
+    margin-bottom: 20px;
+}
+
+.adding-form_left {
+    float: left;
+}
+
+.adding-form_right {
+    float: right;
+}
+
+.adding-form__input, .adding-form__button {
+    font-family: cursive;
+}
+
+.adding-form__input {
+    width: 250px;
+    height: 30px;
+    border: 2px solid grey;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+.adding-form__input_width {
+    width: 350px;
+}
+
+.adding-form__button {
+    width: 60px;
+    height: 33px;
+    background-color: darkgrey;
+    position: relative;
+    right: 65px;
+    bottom: 1px;
+    border: none;
+    border-left: 2px solid grey;
+    cursor: pointer;
+}
+
+.category, .tasks {
+    float: left;
+    width: 45%;
+}

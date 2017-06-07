@@ -1,0 +1,29 @@
+[
+  {
+    "name": "category122",
+    "id": 1,
+    "list": [
+      "list 1",
+      "list 2",
+      "list 3"
+    ]
+  },
+  {
+    "name": "category2",
+    "id": 2,
+    "list": [
+      "list 4",
+      "list 5",
+      "list 6"
+    ]
+  },
+  {
+    "name": "category3",
+    "id": 3,
+    "list": [
+      "list 7",
+      "list 8",
+      "list 9"
+    ]
+  }
+]

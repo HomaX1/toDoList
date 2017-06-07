@@ -1,0 +1,14 @@
+{
+  "name": "toDoList",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "http-server -a localhost -p 8000 -c-1 ./"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "normalize.css": "^7.0.0"
+  },
+  "devDependencies": {
+    "http-server": "^0.10.0"
+  }
+}
