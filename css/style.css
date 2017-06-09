@@ -91,20 +91,25 @@
 .category, .tasks {
     float: left;
     width: 45%;
-}
-
-.category {
     border: 2px solid grey;
     padding-left: 0;
 }
 
-.category li {
+.category {
+    margin-right: 35px;
+}
+
+.tasks {
+    visibility: hidden;
+}
+
+.category li, .tasks li {
     list-style-type: none;
     border-bottom: 2px solid grey;
     padding: 10px;
     font: 16px cursive;
 }
 
-.category li:last-child {
+.category li:last-child, .tasks li:last-child {
     border-bottom: none;
 }
