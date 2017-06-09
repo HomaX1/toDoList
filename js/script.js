@@ -1,3 +1,4 @@
+/*
 $(document).ready(function () {
 
     $.get("../restore.json", (data, status) => {
@@ -25,10 +26,44 @@ $(document).ready(function () {
             };
         }
 
-        /* console.log("\nStatus: " + status);*/
+        /!* console.log("\nStatus: " + status);*!/
     });
 
 });
+
+*/
+
+$(document).ready(function () {
+
+  let showCategory = (data) => {
+    const categoryUl = $('.category');
+    let allLi = "";
+
+    for (let i = 0; i < data.length; i++) {
+      allLi += "<li data-lists='" + data[i].list + "'>" + data[i].name + "</li>";
+    }
+
+    categoryUl.append(allLi);
+    categoryUl.find('li').on('click', showTasks);
+  };
+
+  let showTasks = (oneCategory) => {
+    const tasksUl = $('.tasks');
+    let liArray = oneCategory.currentTarget.dataset.lists.split(',');
+
+    let liHtml = liArray.map(data => {
+      return "<li>" + data + "</li>";
+    });
+
+    tasksUl.empty();
+    tasksUl.append(liHtml);
+  };
+
+
+  $.get("../restore.json",showCategory);
+
+});
+
 
 
 

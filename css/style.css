@@ -88,28 +88,42 @@
     cursor: pointer;
 }
 
-.category, .tasks {
+.category {
     float: left;
     width: 45%;
     border: 2px solid grey;
     padding-left: 0;
 }
 
+.tasks {
+    float: left;
+    width: 45%;
+    padding-left: 0;
+}
+
+.tasks li {
+    list-style-type: none;
+    border: 2px solid grey;
+    border-bottom: 0;
+    padding: 10px;
+    font: 16px cursive;
+}
+
+.tasks li:last-child {
+    border-bottom: 2px solid grey;
+}
+
 .category {
     margin-right: 35px;
 }
 
-.tasks {
-    visibility: hidden;
-}
-
-.category li, .tasks li {
+.category li {
     list-style-type: none;
     border-bottom: 2px solid grey;
     padding: 10px;
     font: 16px cursive;
 }
 
-.category li:last-child, .tasks li:last-child {
+.category li:last-child {
     border-bottom: none;
 }
