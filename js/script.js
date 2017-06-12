@@ -1,69 +1,94 @@
 /*
+ $(document).ready(function () {
+
+ $.get("../restore.json", (data, status) => {
+
+ let categoryUl = $('.category');
+ let tasksUl = $('.tasks');
+
+ for (let i = 0; i < data.length; ++i) {
+
+ let categoryLi = document.createElement('li');
+
+ categoryLi.innerHTML = data[i].name;
+ categoryUl.append(categoryLi);
+
+ categoryLi.onclick = () => {
+ tasksUl.css('visibility', 'visible');
+ $('.tasks li').hide();
+
+ for (let j = 0; j < data[i].list.length; ++j) {
+ let tasksLi = document.createElement('li');
+ tasksLi.innerHTML = data[i].list[j];
+ tasksUl.append(tasksLi);
+ }
+
+ };
+ }
+
+ /!* console.log("\nStatus: " + status);*!/
+ });
+
+ });
+
+ */
+
 $(document).ready(function () {
+    let storageCategory = [];
+    let categoryUl = $('.category');
 
-    $.get("../restore.json", (data, status) => {
+    let showCategory = (data) => {
+        let allLi = "";
+        storageCategory = data;
 
-        let categoryUl = $('.category');
-        let tasksUl = $('.tasks');
-
-        for (let i = 0; i < data.length; ++i) {
-
-            let categoryLi = document.createElement('li');
-
-            categoryLi.innerHTML = data[i].name;
-            categoryUl.append(categoryLi);
-
-            categoryLi.onclick = () => {
-                tasksUl.css('visibility', 'visible');
-                $('.tasks li').hide();
-
-                for (let j = 0; j < data[i].list.length; ++j) {
-                    let tasksLi = document.createElement('li');
-                    tasksLi.innerHTML = data[i].list[j];
-                    tasksUl.append(tasksLi);
-                }
-
-            };
+        for (let i = 0; i < storageCategory.length; i++) {
+            allLi += "<li data-lists='" + storageCategory[i].list + "'>" + storageCategory[i].name + "</li>";
         }
 
-        /!* console.log("\nStatus: " + status);*!/
-    });
+        categoryUl.append(allLi);
+        categoryUl.find('li').on('click', showTasks);
+    };
+
+
+    let btnAddCategory = $('.adding-form__button_category');
+    let addCategory = (e) => {
+        e.preventDefault();
+        categoryUl.empty();
+
+        let idDate = new Date();
+        let adding = $('.adding-form__input').val();
+        let viewAdding = {
+            name: adding,
+            id: idDate.getTime(),
+            list: []
+        };
+
+        console.log(idDate.getTime());
+
+        storageCategory.push(viewAdding);
+        showCategory(storageCategory);
+        console.log(storageCategory);
+    };
+
+    btnAddCategory.click(addCategory);
+
+
+    let showTasks = (oneCategory) => {
+        const tasksUl = $('.tasks');
+        let liArray = oneCategory.currentTarget.dataset.lists.split(',');
+
+        let liHtml = liArray.map(data => {
+            return "<li>" + data + "</li>";
+        });
+
+        tasksUl.empty();
+        tasksUl.append(liHtml);
+    };
+
+    $.get("../restore.json", showCategory);
 
 });
 
-*/
 
-$(document).ready(function () {
-
-  let showCategory = (data) => {
-    const categoryUl = $('.category');
-    let allLi = "";
-
-    for (let i = 0; i < data.length; i++) {
-      allLi += "<li data-lists='" + data[i].list + "'>" + data[i].name + "</li>";
-    }
-
-    categoryUl.append(allLi);
-    categoryUl.find('li').on('click', showTasks);
-  };
-
-  let showTasks = (oneCategory) => {
-    const tasksUl = $('.tasks');
-    let liArray = oneCategory.currentTarget.dataset.lists.split(',');
-
-    let liHtml = liArray.map(data => {
-      return "<li>" + data + "</li>";
-    });
-
-    tasksUl.empty();
-    tasksUl.append(liHtml);
-  };
-
-
-  $.get("../restore.json",showCategory);
-
-});
-
-
-
+// поискать как добавить hash, после #id
 
