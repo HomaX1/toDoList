@@ -36,6 +36,7 @@
 $(document).ready(function () {
     let storageCategory = [];
     let categoryUl = $('.category');
+    let tasksUl = $('.tasks');
 
     let showCategory = (data) => {
         let allLi = "";
@@ -72,23 +73,37 @@ $(document).ready(function () {
     btnAddCategory.click(addCategory);
 
 
-    let showTasks = (oneCategory) => {
-        const tasksUl = $('.tasks');
-        let liArray = oneCategory.currentTarget.dataset.lists.split(',');
+    let hashId = (category) => {
+        window.location.hash = category.currentTarget.dataset.idCategory;
+    };
 
+    let list = "";
+    let showTasks = (oneCategory) => {
+        let liArray = oneCategory.currentTarget.dataset.lists.split(',');
         let liHtml = liArray.map(data => {
             return "<li>" + data + "</li>";
         });
 
+        list = liArray;
         tasksUl.empty();
         tasksUl.append(liHtml);
 
     };
 
 
-    let hashId = (category) => {
-            window.location.hash = category.currentTarget.dataset.idCategory;
+    let btnAddTask = $('.adding-form__button_task');
+    let addTask = (e) => {
+        e.preventDefault();
+
+        let addingTask = $('.adding-form__input_addTask').val();
+
+        list.push(addingTask);
+         console.log(list);
+        showTasks(list);
     };
+
+    btnAddTask.click(addTask);
+
 
     $.get("../restore.json", showCategory);
 
