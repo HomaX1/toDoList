@@ -42,11 +42,11 @@ $(document).ready(function () {
         storageCategory = data;
 
         for (let i = 0; i < storageCategory.length; i++) {
-            allLi += "<li data-lists='" + storageCategory[i].list + "'>" + storageCategory[i].name + "</li>";
+            allLi += "<li data-lists='" + storageCategory[i].list + "' data-id-category='" + storageCategory[i].id + "'>" + storageCategory[i].name + "</li>";
         }
 
         categoryUl.append(allLi);
-        categoryUl.find('li').on('click', showTasks);
+        categoryUl.find('li').on('click', showTasks).on('click', hashId);
     };
 
 
@@ -63,11 +63,10 @@ $(document).ready(function () {
             list: []
         };
 
-        console.log(idDate.getTime());
+        /*console.log(idDate.getTime());*/
 
         storageCategory.push(viewAdding);
         showCategory(storageCategory);
-        console.log(storageCategory);
     };
 
     btnAddCategory.click(addCategory);
@@ -83,12 +82,16 @@ $(document).ready(function () {
 
         tasksUl.empty();
         tasksUl.append(liHtml);
+
+    };
+
+
+    let hashId = (category) => {
+            window.location.hash = category.currentTarget.dataset.idCategory;
     };
 
     $.get("../restore.json", showCategory);
 
 });
 
-
-// поискать как добавить hash, после #id
 
