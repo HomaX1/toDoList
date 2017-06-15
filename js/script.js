@@ -43,13 +43,14 @@ $(document).ready(function () {
         storageCategory = data;
 
         for (let i = 0; i < storageCategory.length; i++) {
-            allLi += "<li data-lists='" + storageCategory[i].list + "' data-id-category='" + storageCategory[i].id + "'>" + storageCategory[i].name + "</li>";
+            allLi += "<li data-id-category='" + storageCategory[i].id + "'>" + storageCategory[i].name + "</li>";
         }
 
         categoryUl.append(allLi);
-        categoryUl.find('li').on('click', showTasks).on('click', hashId);
+        categoryUl.find('li').on('click', showTasks);
     };
 
+    /*data-lists='" + storageCategory[i].list + "'*/
 
     let btnAddCategory = $('.adding-form__button_category');
     let addCategory = (e) => {
@@ -73,33 +74,41 @@ $(document).ready(function () {
     btnAddCategory.click(addCategory);
 
 
-    let hashId = (category) => {
-        window.location.hash = category.currentTarget.dataset.idCategory;
-    };
+    let idCategory = "";
+    let showTasks = (element) => {
+        if(element) {
+            window.location.hash = element.currentTarget.dataset.idCategory;
+        }
 
-    let list = "";
-    let showTasks = (oneCategory) => {
-        let liArray = oneCategory.currentTarget.dataset.lists.split(',');
-        let liHtml = liArray.map(data => {
-            return "<li>" + data + "</li>";
-        });
+        idCategory = +window.location.hash.substring(1) || element.currentTarget.dataset.idCategory;
 
-        list = liArray;
-        tasksUl.empty();
-        tasksUl.append(liHtml);
+        for (let j = 0; j < storageCategory.length; j++) {
+            if (+idCategory === storageCategory[j].id) {
 
+                let liTask = storageCategory[j].list.map(task => {
+                    return "<li>" + task + "</li>";
+                });
+
+                tasksUl.empty();
+                tasksUl.append(liTask);
+
+            }
+        }
     };
 
 
     let btnAddTask = $('.adding-form__button_task');
     let addTask = (e) => {
         e.preventDefault();
-
         let addingTask = $('.adding-form__input_addTask').val();
 
-        list.push(addingTask);
-         console.log(list);
-        showTasks(list);
+        storageCategory.forEach(function(item) {
+            if (+idCategory === item.id) {
+                item.list.push(addingTask);
+                showTasks();
+                console.log(storageCategory);
+            }
+        });
     };
 
     btnAddTask.click(addTask);
