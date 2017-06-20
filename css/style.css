@@ -127,3 +127,15 @@
 .category li:last-child {
     border-bottom: none;
 }
+
+.fa-trash-o {
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+.fa-trash-o:active, .fa-trash-o:focus {
+    outline: none;
+}

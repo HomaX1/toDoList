@@ -3,7 +3,8 @@ $(function () {
         categoryUl: $('.category'),
         tasksUl: $('.tasks'),
         btnAddCategory: $('.adding-form__button_category'),
-        btnAddTask: $('.adding-form__button_task')
+        btnAddTask: $('.adding-form__button_task'),
+        btnDelete: $('.fa-trash-o')
     };
     let globalStorage = [];
     let idCategory = "";
@@ -13,11 +14,12 @@ $(function () {
         globalStorage = data;
 
         let allLi = globalStorage.map(categoryItem => {
-            return "<li data-id-category='" + categoryItem.id + "'>" + categoryItem.name + "</li>";
+            return "<li data-id-category='" + categoryItem.id + "'>" + categoryItem.name + "<button class='fa fa-trash-o' aria-hidden='true'></button>" + "</li>";
         });
 
         ALLCONST.categoryUl.append(allLi);
         ALLCONST.categoryUl.find('li').on('click', showTasks);
+        $('.fa-trash-o').click(deleteCategoryOrTask);
     };
 
 
@@ -49,11 +51,12 @@ $(function () {
             if (+idCategory === globalStorage[j].id) {
 
                 let liTask = globalStorage[j].list.map(task => {
-                    return "<li>" + task + "</li>";
+                    return "<li>" + task + "<button class='fa fa-trash-o' aria-hidden='true'></button>" + "</li>";
                 });
 
                 ALLCONST.tasksUl.empty();
                 ALLCONST.tasksUl.append(liTask);
+                ALLCONST.btnDelete.click(deleteCategoryOrTask);
 
             }
         }
@@ -74,8 +77,15 @@ $(function () {
     };
 
 
+    let deleteCategoryOrTask = (e) => {
+        e.preventDefault();
+        console.log("hklhl");
+    };
+
+
     ALLCONST.btnAddCategory.click(addCategory);
     ALLCONST.btnAddTask.click(addTask);
+
 
     $.get("../restore.json", showCategories);
 
