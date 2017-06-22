@@ -91,7 +91,6 @@
 .category {
     float: left;
     width: 45%;
-    border: 2px solid grey;
     padding-left: 0;
 }
 
@@ -119,13 +118,14 @@
 
 .category li {
     list-style-type: none;
-    border-bottom: 2px solid grey;
+    border: 2px solid grey;
+    border-bottom: 0;
     padding: 10px;
     font: 16px cursive;
 }
 
 .category li:last-child {
-    border-bottom: none;
+    border-bottom: 2px solid grey;
 }
 
 .fa-trash-o {

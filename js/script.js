@@ -14,12 +14,12 @@ $(function () {
         globalStorage = data;
 
         let allLi = globalStorage.map(categoryItem => {
-            return "<li data-id-category='" + categoryItem.id + "'>" + categoryItem.name + "<button class='fa fa-trash-o' aria-hidden='true'></button>" + "</li>";
+            return "<li data-id-category='" + categoryItem.id + "'>" + categoryItem.name + "<button class='categoryTrash fa fa-trash-o' aria-hidden='true'></button>" + "</li>";
         });
 
         ALLCONST.categoryUl.append(allLi);
         ALLCONST.categoryUl.find('li').on('click', showTasks);
-        $('.fa-trash-o').click(deleteCategoryOrTask);
+        $('.categoryTrash').click(deleteCategory);
     };
 
 
@@ -51,12 +51,12 @@ $(function () {
             if (+idCategory === globalStorage[j].id) {
 
                 let liTask = globalStorage[j].list.map(task => {
-                    return "<li>" + task + "<button class='fa fa-trash-o' aria-hidden='true'></button>" + "</li>";
+                    return "<li>" + task + "<button class='taskTrash fa fa-trash-o' aria-hidden='true'></button>" + "</li>";
                 });
 
                 ALLCONST.tasksUl.empty();
                 ALLCONST.tasksUl.append(liTask);
-                ALLCONST.btnDelete.click(deleteCategoryOrTask);
+                $('.taskTrash').click(deleteTask);
 
             }
         }
@@ -77,9 +77,26 @@ $(function () {
     };
 
 
-    let deleteCategoryOrTask = (e) => {
+    let deleteCategory = (element) => {
+        let idLiCategory = element.currentTarget.parentElement.dataset.idCategory;
+
+        element.preventDefault();
+
+        globalStorage = globalStorage.filter(function (item) {
+            return item.id !== +idLiCategory;
+        });
+
+        if (+idCategory === +idLiCategory) {
+            ALLCONST.tasksUl.empty();
+        }
+
+        ALLCONST.categoryUl.empty();
+        showCategories(globalStorage);
+    };
+
+
+    let deleteTask = (e) => {
         e.preventDefault();
-        console.log("hklhl");
     };
 
 
