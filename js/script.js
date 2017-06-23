@@ -57,7 +57,6 @@ $(function () {
                 ALLCONST.tasksUl.empty();
                 ALLCONST.tasksUl.append(liTask);
                 $('.taskTrash').click(deleteTask);
-
             }
         }
     };
@@ -68,7 +67,7 @@ $(function () {
 
         e.preventDefault();
 
-        globalStorage.forEach(function (item) {
+        globalStorage.forEach(item => {
             if (+idCategory === item.id) {
                 item.list.push(addingTask);
                 showTasks();
@@ -82,7 +81,7 @@ $(function () {
 
         element.preventDefault();
 
-        globalStorage = globalStorage.filter(function (item) {
+        globalStorage = globalStorage.filter(item => {
             return item.id !== +idLiCategory;
         });
 
@@ -95,8 +94,20 @@ $(function () {
     };
 
 
-    let deleteTask = (e) => {
-        e.preventDefault();
+    let deleteTask = (element) => {
+        element.preventDefault();
+
+        let parentTask = element.currentTarget.parentElement.innerText;
+
+        globalStorage.forEach(item => {
+            if (+idCategory === item.id) {
+
+                item.list = item.list.filter(list => {
+                    return list !== parentTask;
+                });
+                showTasks();
+            }
+        });
     };
 
 
