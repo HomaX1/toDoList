@@ -4,7 +4,8 @@ $(function () {
         tasksUl: $('.tasks'),
         btnAddCategory: $('.adding-form__button_category'),
         btnAddTask: $('.adding-form__button_task'),
-        btnDelete: $('.fa-trash-o')
+        btnDelete: $('.fa-trash-o'),
+        btnSearch: $('.search__icon')
     };
     let globalStorage = [];
     let idCategory = "";
@@ -14,7 +15,7 @@ $(function () {
         globalStorage = data;
 
         let allLi = globalStorage.map(categoryItem => {
-            return "<li data-id-category='" + categoryItem.id + "'>" + categoryItem.name + "<button class='categoryTrash fa fa-trash-o' aria-hidden='true'></button>" + "</li>";
+            return "<li data-id-category='" + categoryItem.id + "'>" + categoryItem.name + "<button class='categoryTrash fa fa-trash-o' aria-hidden='true'></button></li>";
         });
 
         ALLCONST.categoryUl.append(allLi);
@@ -51,7 +52,7 @@ $(function () {
             if (+idCategory === globalStorage[j].id) {
 
                 let liTask = globalStorage[j].list.map(task => {
-                    return "<li>" + task + "<button class='taskTrash fa fa-trash-o' aria-hidden='true'></button>" + "</li>";
+                    return oneTask(task);
                 });
 
                 ALLCONST.tasksUl.empty();
@@ -59,6 +60,11 @@ $(function () {
                 $('.taskTrash').click(deleteTask);
             }
         }
+    };
+
+
+    let oneTask = (task) => {
+        return "<li>" + task + "<button class='taskTrash fa fa-trash-o' aria-hidden='true'></button></li>";
     };
 
 
@@ -77,7 +83,7 @@ $(function () {
 
 
     let deleteCategory = (element) => {
-        let idLiCategory = element.currentTarget.parentElement.dataset.idCategory;
+        const idLiCategory = element.currentTarget.parentElement.dataset.idCategory;
 
         element.preventDefault();
 
@@ -97,7 +103,7 @@ $(function () {
     let deleteTask = (element) => {
         element.preventDefault();
 
-        let parentTask = element.currentTarget.parentElement.innerText;
+        const parentTask = element.currentTarget.parentElement.innerText;
 
         globalStorage.forEach(item => {
             if (+idCategory === item.id) {
@@ -111,8 +117,36 @@ $(function () {
     };
 
 
+    let searchTask = (element) => {
+        const searchValue = $('.search__input').val();
+
+        element.preventDefault();
+
+        globalStorage.forEach(item => {
+
+            if (+idCategory === item.id) {
+
+                let searchLists = item.list
+                    .filter(list => {
+                        return list.indexOf(searchValue) !== -1;
+                    })
+                    .map(itemList => {
+                        return oneTask(itemList);
+                    });
+
+                ALLCONST.tasksUl.empty();
+                ALLCONST.tasksUl.append(searchLists);
+
+            }
+
+        });
+
+    };
+
+
     ALLCONST.btnAddCategory.click(addCategory);
     ALLCONST.btnAddTask.click(addTask);
+    ALLCONST.btnSearch.click(searchTask);
 
 
     $.get("../restore.json", showCategories);
