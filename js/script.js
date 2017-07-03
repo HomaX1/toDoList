@@ -1,10 +1,12 @@
 $(function () {
+    'use strict';
     const ALLCONST = {
         categoryUl: $('.category'),
         tasksUl: $('.tasks'),
         btnAddCategory: $('.adding-form__button_category'),
         btnAddTask: $('.adding-form__button_task'),
         btnDelete: $('.fa-trash-o'),
+        btnEdit: $('.fa-pencil'),
         btnSearch: $('.search__icon')
     };
     let globalStorage = [];
@@ -15,12 +17,37 @@ $(function () {
         globalStorage = data;
 
         let allLi = globalStorage.map(categoryItem => {
-            return "<li data-id-category='" + categoryItem.id + "'>" + categoryItem.name + "<button class='categoryTrash fa fa-trash-o' aria-hidden='true'></button></li>";
+            return "<li data-id-category='" + categoryItem.id + "'>" + categoryItem.name + "<button class='categoryTrash fa fa-trash-o' aria-hidden='true'></button><button class='categoryPencil fa fa-pencil' aria-hidden='true'></button></li>";
         });
 
+        ALLCONST.categoryUl.empty();
         ALLCONST.categoryUl.append(allLi);
         ALLCONST.categoryUl.find('li').on('click', showTasks);
         $('.categoryTrash').click(deleteCategory);
+        $('.categoryPencil').click(editCategory);
+    };
+
+
+    let editCategory = (element) => {
+        let $parentElement = $(element.target).parent();
+        const inputEdit = $('.editInputCategory').clone();
+        const dataIdCategoryParent = +$parentElement.attr('data-id-category');
+
+        element.preventDefault();
+        $parentElement.replaceWith(inputEdit.css('display', 'block').val($parentElement.text()));
+
+        inputEdit.on('keyup', (event) => {
+            if (event.keyCode === 13) {
+
+                globalStorage.forEach(item => {
+                   if(item.id === dataIdCategoryParent) {
+                       item.name = inputEdit.val();
+                   }
+                });
+
+                showCategories(globalStorage);
+            }
+        });
     };
 
 
@@ -34,9 +61,26 @@ $(function () {
         };
 
         e.preventDefault();
-        ALLCONST.categoryUl.empty();
+
 
         globalStorage.push(viewAdding);
+        showCategories(globalStorage);
+    };
+
+
+    let deleteCategory = (element) => {
+        const idLiCategory = element.currentTarget.parentElement.dataset.idCategory;
+
+        element.preventDefault();
+
+        globalStorage = globalStorage.filter(item => {
+            return item.id !== +idLiCategory;
+        });
+
+        if (+idCategory === +idLiCategory) {
+            ALLCONST.tasksUl.empty();
+        }
+
         showCategories(globalStorage);
     };
 
@@ -58,13 +102,14 @@ $(function () {
                 ALLCONST.tasksUl.empty();
                 ALLCONST.tasksUl.append(liTask);
                 $('.taskTrash').click(deleteTask);
+                $('.taskPencil').click(editTask());
             }
         }
     };
 
 
     let oneTask = (task) => {
-        return "<li>" + task + "<button class='taskTrash fa fa-trash-o' aria-hidden='true'></button></li>";
+        return "<li>" + task + "<button class='taskTrash fa fa-trash-o' aria-hidden='true'></button><button class='taskPencil fa fa-pencil' aria-hidden='true'></button></li>";
     };
 
 
@@ -82,24 +127,6 @@ $(function () {
     };
 
 
-    let deleteCategory = (element) => {
-        const idLiCategory = element.currentTarget.parentElement.dataset.idCategory;
-
-        element.preventDefault();
-
-        globalStorage = globalStorage.filter(item => {
-            return item.id !== +idLiCategory;
-        });
-
-        if (+idCategory === +idLiCategory) {
-            ALLCONST.tasksUl.empty();
-        }
-
-        ALLCONST.categoryUl.empty();
-        showCategories(globalStorage);
-    };
-
-
     let deleteTask = (element) => {
         element.preventDefault();
 
@@ -114,6 +141,11 @@ $(function () {
                 showTasks();
             }
         });
+    };
+
+
+    let editTask = () => {
+
     };
 
 

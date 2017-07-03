@@ -128,7 +128,7 @@
     border-bottom: 2px solid grey;
 }
 
-.fa-trash-o {
+.fa-trash-o, .fa-pencil {
     float: right;
     font-size: 20px;
     cursor: pointer;
@@ -136,6 +136,20 @@
     background-color: transparent;
 }
 
-.fa-trash-o:active, .fa-trash-o:focus {
+.fa-trash-o:active, .fa-trash-o:focus, .fa-pencil:active, .fa-pencil:focus {
+    outline: none;
+}
+
+.editInputCategory {
+    width: 93.5%;
+    display: none;
+    list-style-type: none;
+    border: 2px solid grey;
+    border-bottom: 0;
+    padding: 10px;
+    font: 16px cursive;
+}
+
+.editInputCategory:active, .editInputCategory:focus {
     outline: none;
 }
