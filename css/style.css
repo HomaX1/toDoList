@@ -96,7 +96,7 @@
 
 .tasks {
     float: left;
-    width: 45%;
+    width: 44.5%;
     padding-left: 0;
 }
 
@@ -148,6 +148,10 @@
     border-bottom: 0;
     padding: 10px;
     font: 16px cursive;
+}
+
+.editInputCategory:last-child {
+    border-bottom: 2px solid grey;
 }
 
 .editInputCategory:active, .editInputCategory:focus {

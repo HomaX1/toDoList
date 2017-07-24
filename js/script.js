@@ -102,7 +102,7 @@ $(function () {
                 ALLCONST.tasksUl.empty();
                 ALLCONST.tasksUl.append(liTask);
                 $('.taskTrash').click(deleteTask);
-                $('.taskPencil').click(editTask());
+                $('.taskPencil').click(editTask);
             }
         }
     };
@@ -110,6 +110,35 @@ $(function () {
 
     let oneTask = (task) => {
         return "<li>" + task + "<button class='taskTrash fa fa-trash-o' aria-hidden='true'></button><button class='taskPencil fa fa-pencil' aria-hidden='true'></button></li>";
+    };
+
+
+    let editTask = (element) => {
+        let $parentElement = $(element.target).parent();
+        const inputEdit = $('.editInputCategory').clone();
+        const parentTaskText = $(element.target).parent().text();
+
+        element.preventDefault();
+
+        $parentElement.replaceWith(inputEdit.css('display', 'block').val($parentElement.text()));
+
+        inputEdit.on('keyup', (event) => {
+            if (event.keyCode === 13) {
+
+                globalStorage.forEach(item => {
+                    if(+idCategory === item.id) {
+
+                        item.list = item.list.map(list => {
+                            if(list === parentTaskText) {
+                                list = inputEdit.val();
+                            }
+                            return list;
+                        });
+                    }
+                });
+                showTasks();
+            }
+        });
     };
 
 
@@ -141,11 +170,6 @@ $(function () {
                 showTasks();
             }
         });
-    };
-
-
-    let editTask = () => {
-
     };
 
 
